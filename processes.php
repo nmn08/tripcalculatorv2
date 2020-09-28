@@ -406,4 +406,5 @@ if (isset($_POST['printReport'])) {
 if (isset($_POST['getTripcode'])) {
     echo $_SESSION['tripCode'];
 }
+$mysqli->close();
 ?>
