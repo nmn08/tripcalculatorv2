@@ -34,7 +34,7 @@ if (isset($_POST['name'])) {
     $user_name = $_POST['name'];
     $tripID = $_SESSION['tripID'];
 
-    $sql_u = "SELECT * FROM traveller WHERE name = '{$user_name}' AND status=1";
+    $sql_u = "SELECT * FROM traveller WHERE name = '{$user_name}' AND status=1 AND trip_id={$tripID}";
     $traveller = $mysqli->query($sql_u);
 
     if (mysqli_num_rows($traveller) > 0 ) {
