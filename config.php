@@ -9,7 +9,7 @@ $user = 't6o2ke3a9bzrrua6';
 $password = 'je1xmssd9ya1gm1y'; //To be completed if you have set a password to root
 $database = 'tfyzjhuuhqb83uk9'; //To be completed to connect to a database. The database must exist.
 $port = 3306; //Default must be NULL to use default port
-$mysqli = new mysqli('localhost', $user, $password, $database, $port);
+$mysqli = new mysqli($host, $user, $password, $database, $port);
 
 if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') '
