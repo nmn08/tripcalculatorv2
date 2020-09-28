@@ -273,14 +273,13 @@ if (isset($_POST['getTraveller'])) {
     $sql_updated_expenses =
         "SELECT expense.id, expense.trip_id, expense.status, expense.date, categories.cat_name,
     expense.amount, expense.description, traveller.name as payer_name, t1.name as excl_1_name,
-    t2.name as excl_2_name, t3.name as excl_3_name, t4.name as excl_4_name 
+    t2.name as excl_2_name, t3.name as excl_3_name
     FROM expense 
     LEFT JOIN categories ON expense.categories_id=categories.id 
     LEFT JOIN traveller ON expense.traveller_id=traveller.id 
     LEFT JOIN traveller t1 ON expense.exclude_1=t1.id 
     LEFT JOIN traveller t2 ON expense.exclude_2=t2.id 
     LEFT JOIN traveller t3 ON expense.exclude_3=t3.id 
-    LEFT JOIN traveller t4 ON expense.exclude_4=t4.id 
     WHERE expense.trip_id= '{$_SESSION['tripID']}' AND expense.status=1";
 
     $updated_expenses = $mysqli->query($sql_updated_expenses) or die($mysqli->error);
