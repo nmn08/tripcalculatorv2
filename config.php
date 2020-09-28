@@ -4,10 +4,11 @@
 * Change NULL to port number to use DBMS other than the default using port 3306
 *
 */
-$user = 'root';
-$password = ''; //To be completed if you have set a password to root
-$database = 'mydb'; //To be completed to connect to a database. The database must exist.
-$port = NULL; //Default must be NULL to use default port
+$host = 'durvbryvdw2sjcm5.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
+$user = 't6o2ke3a9bzrrua6';
+$password = 'je1xmssd9ya1gm1y'; //To be completed if you have set a password to root
+$database = 'tfyzjhuuhqb83uk9'; //To be completed to connect to a database. The database must exist.
+$port = 3306; //Default must be NULL to use default port
 $mysqli = new mysqli('localhost', $user, $password, $database, $port);
 
 if ($mysqli->connect_error) {
