@@ -21,7 +21,7 @@
     $_SESSION['tripCode'] = $tripcode;
 
     if ($results->num_rows > 0) {
-        $status = true;
+        $_SESSION['status'] = true;
         $sql_travellers =
         "SELECT id, name, cast(expense as decimal(10,2)) as expense, cast(payout as decimal(10,2)) as payout,
         cast(cashin as decimal(10,2)) as cashin, cast(cashout as decimal(10,2)) as cashout
@@ -40,113 +40,126 @@
         LEFT JOIN traveller t3 ON expense.exclude_3=t3.id 
         WHERE expense.trip_id= '{$_SESSION['tripID']}' AND expense.status=1";
     } else {
-        $status = false;
+        $_SESSION['status'] = false;
     }
     ?>
 </head>
 
 <body>
     <br>
+    <?php
+    if ($_SESSION['status']==false) {
+        echo 
+        "<div class=\"container\">
+            <div class=\"row justify-content-center\">
+                <h3> There is no result found!</h3>
+            </div>
+            <div class=\"row justify-content-center\">
+                <a href=\"index.php\" class=\"btn btn-primary btn-lg active\" role=\"button\" aria-pressed=\"true\">HomePage</a>
+            </div>";
+    } else {
+    ?>
     <div class="container">
         <div class="row justify-content-center">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Location</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th colspan="1">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if ($status) {
-                        echo "
-                        <tr>
-                            <td>" . $result['location'] . "</td>
-                            <td>" . $result['startdate'] . "</td>
-                            <td>" . $result['enddate'] . "</td>
-                            <td> <a href=\"edit_trip.php\" class=\"btn btn-info\">Edit</a> </td>
-                        </tr>";
-                    }
-                    else {
-                        echo "There is no result!";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        <?php if ($status) { ?>
-        <h2>Trip Summary</h2>
-        <h3>Expenses</h3>
-        <div class="row justify-content-center">
-            <div class="col-10">
-                <table class="table" >
+            <div class="table-responsive-md">
+                <table class="table">
                     <thead>
-                        <tr class="d-flex">
-                            <th style="width: 15%">Date</th>
-                            <th style="width: 15%">Category</th>
-                            <th style="width: 20%">Description</th>
-                            <th style="width: 10%">Amount</th>
-                            <th style="width: 10%">Payer</th>
-                            <th style="width: 30%" colspan="3">Excluding</th>
+                        <tr>
+                            <th>Location</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th colspan="1">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        $expenses = $mysqli->query($sql_expenses) or die($mysqli->error);
-                        while ($expense = $expenses->fetch_assoc()) {
-                            echo
-                            "<tr class=\"d-flex\" id=\"expRow_" . $expense['id'] . "\">
-                                <td style=\"width: 15%\">" . $expense['date'] . "</td>
-                                <td style=\"width: 15%\">" . $expense['cat_name'] . "</td>
-                                <td style=\"width: 20%\">" . $expense['description'] . "</td>
-                                <td style=\"width: 10%\">" . $expense['amount'] . "</td>
-                                <td style=\"width: 10%\">" . $expense['payer_name'] . "</td>
-                                <td style=\"width: 10%\" colspan=\"1\">" . $expense['excl_1_name'] . "</td>
-                                <td style=\"width: 10%\" colspan=\"1\">" . $expense['excl_2_name'] . "</td>
-                                <td style=\"width: 10%\" colspan=\"1\">" . $expense['excl_3_name'] . "</td>
-                            </tr>
-                            ";
-                        }
-                        ?>
-                    </tbody>   
+                    <?php
+                    echo "
+                    <tr>
+                        <td>" . $result['location'] . "</td>
+                        <td>" . $result['startdate'] . "</td>
+                        <td>" . $result['enddate'] . "</td>
+                        <td> <a href=\"edit_trip.php\" class=\"btn btn-info\">Edit</a> </td>
+                    </tr>";
+                    ?>
+                    </tbody>
                 </table>
+            </div>
+        </div>
+
+        <h2>Trip Summary</h2>
+        <h3>Expenses</h3>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="table-responsive-md">
+                    <table class="table" >
+                        <thead>
+                            <tr class="d-flex">
+                                <th style="width: 15%">Date</th>
+                                <th style="width: 15%">Category</th>
+                                <th style="width: 20%">Description</th>
+                                <th style="width: 10%">Amount</th>
+                                <th style="width: 10%">Payer</th>
+                                <th style="width: 30%" colspan="3">Not Split To</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $expenses = $mysqli->query($sql_expenses) or die($mysqli->error);
+                            while ($expense = $expenses->fetch_assoc()) {
+                                echo
+                                "<tr class=\"d-flex\" id=\"expRow_" . $expense['id'] . "\">
+                                    <td style=\"width: 15%\">" . $expense['date'] . "</td>
+                                    <td style=\"width: 15%\">" . $expense['cat_name'] . "</td>
+                                    <td style=\"width: 20%\">" . $expense['description'] . "</td>
+                                    <td style=\"width: 10%\">" . $expense['amount'] . "</td>
+                                    <td style=\"width: 10%\">" . $expense['payer_name'] . "</td>
+                                    <td style=\"width: 10%\" colspan=\"1\">" . $expense['excl_1_name'] . "</td>
+                                    <td style=\"width: 10%\" colspan=\"1\">" . $expense['excl_2_name'] . "</td>
+                                    <td style=\"width: 10%\" colspan=\"1\">" . $expense['excl_3_name'] . "</td>
+                                </tr>
+                                ";
+                            }
+                            ?>
+                        </tbody>   
+                    </table>
+                </div>
             </div>
         </div>
         <h3>Travellers</h3>
         <div class="row justify-content-center">
-            <div class="col-10">
-                <table class="table" >
-                    <thead>
-                        <tr>
-                            <th style="width: 20%">Name</th>
-                            <th style="width: 20%">Trip Cost</th>
-                            <th style="width: 20%">Total Payout</th>
-                            <th style="width: 20%">Cash In</th>
-                            <th style="width: 20%">Cash Out</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $travellers = $mysqli->query($sql_travellers) or die($mysqli->error);
-                        while ($traveller = $travellers->fetch_assoc()) {
-                            echo 
-                            "<tr>
-                                <td style=\"width: 20%\">" . $traveller['name'] . "</th>
-                                <td style=\"width: 20%\">$" . $traveller['expense'] . "</th>
-                                <td style=\"width: 20%\">$" . $traveller['payout'] . "</th>
-                                <td style=\"width: 20%\">$" . $traveller['cashin'] . "</th>
-                                <td style=\"width: 20%\">$" . $traveller['cashout'] . "</th>
-                            </tr>";
-                        }
-                        ?>
-                    </tbody>   
-                </table>
+            <div class="col-12">
+                <div class="table-responsive-md">
+                    <table class="table" >
+                        <thead>
+                            <tr>
+                                <th style="width: 20%">Name</th>
+                                <th style="width: 20%">Trip Cost</th>
+                                <th style="width: 20%">Total Payout</th>
+                                <th style="width: 20%">Cash In</th>
+                                <th style="width: 20%">Cash Out</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $travellers = $mysqli->query($sql_travellers) or die($mysqli->error);
+                            while ($traveller = $travellers->fetch_assoc()) {
+                                echo 
+                                "<tr>
+                                    <td style=\"width: 20%\">" . $traveller['name'] . "</th>
+                                    <td style=\"width: 20%\">$" . $traveller['expense'] . "</th>
+                                    <td style=\"width: 20%\">$" . $traveller['payout'] . "</th>
+                                    <td style=\"width: 20%\">$" . $traveller['cashin'] . "</th>
+                                    <td style=\"width: 20%\">$" . $traveller['cashout'] . "</th>
+                                </tr>";
+                            }
+                            ?>
+                        </tbody>   
+                    </table>
+                </div>
             </div>
         </div>
-        <?php } ?>
     </div>
+    <?php } ?>
 </body>
 <?php
 $mysqli->close();
