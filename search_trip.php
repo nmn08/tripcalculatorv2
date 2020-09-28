@@ -61,29 +61,27 @@
     ?>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="table-responsive-md">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Location</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th colspan="1">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    echo "
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>" . $result['location'] . "</td>
-                        <td>" . $result['startdate'] . "</td>
-                        <td>" . $result['enddate'] . "</td>
-                        <td> <a href=\"edit_trip.php\" class=\"btn btn-info\">Edit</a> </td>
-                    </tr>";
-                    ?>
-                    </tbody>
-                </table>
-            </div>
+                        <th>Location</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th colspan="1">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                echo "
+                <tr>
+                    <td>" . $result['location'] . "</td>
+                    <td>" . $result['startdate'] . "</td>
+                    <td>" . $result['enddate'] . "</td>
+                    <td> <a href=\"edit_trip.php\" class=\"btn btn-info\">Edit</a> </td>
+                </tr>";
+                ?>
+                </tbody>
+            </table>
         </div>
 
         <h2>Trip Summary</h2>
