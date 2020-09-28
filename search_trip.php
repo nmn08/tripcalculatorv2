@@ -133,8 +133,8 @@
                                 <th style="width: 20%">Name</th>
                                 <th style="width: 20%">Trip Cost</th>
                                 <th style="width: 20%">Total Payout</th>
-                                <th style="width: 20%">Owe You</th>
-                                <th style="width: 20%">You Owed</th>
+                                <th style="width: 20%">Owes You</th>
+                                <th style="width: 20%">You Owe</th>
                             </tr>
                         </thead>
                         <tbody>
