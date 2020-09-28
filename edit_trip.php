@@ -23,22 +23,27 @@
     <?php
     session_start();
     include "config.php";
-    
-    //Traveller Data
-    $sql_travellers = 
-    "SELECT * 
-    FROM traveller 
-    WHERE trip_id= '{$_SESSION['tripID']}' AND status=1";
+    if ($_SESSION['status']) {
+        //Traveller Data
+        $sql_travellers = 
+        "SELECT * 
+        FROM traveller 
+        WHERE trip_id= '{$_SESSION['tripID']}' AND status=1";
 
 
-    // Categories Data
-    $sql_categories = "SELECT * 
-    FROM categories";
+        // Categories Data
+        $sql_categories = "SELECT * 
+        FROM categories";
+    }
     ?>
 
 </head>
 
 <body>
+    <?php
+    if ($_SESSION['status']==false) {
+        header("Location: index.php");
+    } else { ?>
     <div class="container" id="stepForm">
         <!-- Tab 1: Travellers Information -->
         <h3>Travellers Information</h3>
@@ -127,7 +132,7 @@
                         <select class="form-control col-sm-2 payer" id="payer" name="payer">
                         </select>
                         <?php
-                        echo "<label class=\"col-sm-2 col-form-label\" for=\"exclude\">Exculde</label>";
+                        echo "<label class=\"col-sm-2 col-form-label\" for=\"exclude\">Not Split To</label>";
                         for ($i = 1; $i <= 3; $i = $i + 1) {
                             echo "<select class=\"form-control col-sm-2 payer\" id=\"excl_" . $i . "\">";
                             echo "</select> ";
@@ -154,7 +159,7 @@
                             <th class="col-2">Description</th>
                             <th class="col-1">Amount</th>
                             <th class="col-1">Payer</th>
-                            <th class="col-3" colspan="3">Excluding</th>
+                            <th class="col-3" colspan="3">Not Split To</th>
                             <th class="col-1">Action</th>
                         </tr>
                     </thead>
@@ -186,6 +191,7 @@
             </div>
         </section>
     </div>
+    <?php } ?>
 </body>
 <!-- Modal -->
 <!-- Delete Traveller Modal -->
@@ -240,7 +246,7 @@
             <select class="form-control col-sm-2 payer" id="edit_payer" name="payer">
             </select>
             <?php
-            echo "<label class=\"col-sm-2 col-form-label\" for=\"exclude\">Exculde</label>";
+            echo "<label class=\"col-sm-2 col-form-label\" for=\"exclude\">Not Split To</label>";
             for ($i = 1; $i <= 3; $i = $i + 1) {
                 echo "<select class=\"form-control col-sm-2 payer\" id=\"edit_excl_" . $i . "\">";
                 echo "</select> ";
